@@ -1,0 +1,18 @@
+{
+	"name": "ARM_EXISTING",
+	"properties": {
+		"activities": [
+			{
+				"name": "Wait1",
+				"description": "THIS IS EXISTING PIPELINE",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			}
+		],
+		"annotations": []
+	}
+}
