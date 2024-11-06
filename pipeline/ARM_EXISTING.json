@@ -1,0 +1,20 @@
+{
+	"name": "ARM_EXISTING",
+	"properties": {
+		"activities": [
+			{
+				"name": "Wait1",
+				"description": "THIS IS REPLACED VERSION",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1000
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-11-06T04:45:16Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

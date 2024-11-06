@@ -1,0 +1,19 @@
+{
+	"name": "ARM_TEMPLATE_TEST",
+	"properties": {
+		"activities": [
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-11-06T04:45:16Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
