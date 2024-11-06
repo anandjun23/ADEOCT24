@@ -1,0 +1,81 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "DF-ADEOCT24"
+		},
+		"LS_BLOB_KV_connectionString": {
+			"value": "DefaultEndpointsProtocol=https;AccountName=adlsoct24;"
+		},
+		"LS_SQL_password": {
+			"value": ""
+		},
+		"LS_blob_connectionString": {
+			"value": ""
+		},
+		"KV_LS_properties_typeProperties_baseUrl": {
+			"value": "https://kv-adeoct24.vault.azure.net/"
+		},
+		"LS_SQL_properties_typeProperties_server": {
+			"value": "sqlserverade24.database.windows.net"
+		},
+		"LS_SQL_properties_typeProperties_database": {
+			"value": "dbadeoct24"
+		},
+		"LS_SQL_properties_typeProperties_userName": {
+			"value": "sqladmin"
+		},
+		"LS_SQL_KV_properties_typeProperties_server": {
+			"value": "sqlserverade24.database.windows.net"
+		},
+		"LS_SQL_KV_properties_typeProperties_database": {
+			"value": "dbadeoct24"
+		},
+		"LS_SQL_KV_properties_typeProperties_userName": {
+			"value": "sqladmin"
+		},
+		"LS_SQL_PARAM_properties_typeProperties_server": {
+			"value": "@{linkedService().sqlServerName}"
+		},
+		"LS_SQL_PARAM_properties_typeProperties_database": {
+			"value": "@{linkedService().dBName}"
+		},
+		"LS_SQL_PARAM_properties_typeProperties_userName": {
+			"value": "@{linkedService().loginid}"
+		},
+		"TBL_A_2_B_properties_copy_Dynamic_Table_parameters_InputTableName": {
+			"value": "TBL_A"
+		},
+		"TBL_A_2_B_properties_copy_Dynamic_Table_parameters_OutputTableName": {
+			"value": "TBL_B"
+		},
+		"TBL_D_2_E_properties_copy_Dynamic_Table_parameters_InputTableName": {
+			"value": "TBL_D"
+		},
+		"TBL_D_2_E_properties_copy_Dynamic_Table_parameters_OutputTableName": {
+			"value": "TBL_E"
+		},
+		"TBL_X_2_Y_properties_copy_Dynamic_Table_parameters_InputTableName": {
+			"value": "TBL_X"
+		},
+		"TBL_X_2_Y_properties_copy_Dynamic_Table_parameters_OutputTableName": {
+			"value": "TBL_Y"
+		},
+		"eventbasedtrigger_properties_typeProperties_scope": {
+			"value": "/subscriptions/7995e5b3-8aee-4bda-b2ce-489aa0ffb40f/resourceGroups/RG-ADEOCT24/providers/Microsoft.Storage/storageAccounts/adlsoct24"
+		},
+		"tumbling_trigger_properties_pipeline_parameters_Window_Start_Time": {
+			"value": "@trigger().outputs.windowStartTime"
+		},
+		"tumbling_trigger_properties_pipeline_parameters_Window_End_Time": {
+			"value": "@trigger().outputs.windowEndTime"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
