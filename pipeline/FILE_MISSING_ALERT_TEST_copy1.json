@@ -1,0 +1,131 @@
+{
+	"name": "FILE_MISSING_ALERT_TEST_copy1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "Dynamic_Blob_File",
+						"type": "DatasetReference",
+						"parameters": {
+							"ContainerName": "dataset",
+							"FolderName": "Input",
+							"FileName": "emp_sal.csv"
+						}
+					},
+					"fieldList": [
+						"exists"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "BinaryReadSettings"
+					}
+				}
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@activity('Get Metadata1').output.exists",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Fail1",
+							"type": "Fail",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"message": "File is Missing",
+								"errorCode": "202"
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "BinarySource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true
+									},
+									"formatSettings": {
+										"type": "BinaryReadSettings"
+									}
+								},
+								"sink": {
+									"type": "BinarySink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "Dynamic_Blob_File",
+									"type": "DatasetReference",
+									"parameters": {
+										"ContainerName": "dataset",
+										"FolderName": "Input",
+										"FileName": "emp_sal.csv"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "Dynamic_Blob_Folder",
+									"type": "DatasetReference",
+									"parameters": {
+										"ContainerName": "dataset",
+										"FolderName": "Output"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-11-06T04:06:10Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

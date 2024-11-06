@@ -1,0 +1,108 @@
+{
+	"name": "GET_META_dATA",
+	"properties": {
+		"activities": [
+			{
+				"name": "GM_FILE",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "emp_Sal_csv",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"size",
+						"lastModified",
+						"itemType",
+						"itemName",
+						"exists",
+						"columnCount",
+						"contentMD5",
+						"structure"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
+			{
+				"name": "GM_FOLDER",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "dataset_input_folder",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"lastModified",
+						"itemType",
+						"itemName",
+						"exists",
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
+			{
+				"name": "GM_DATABASE",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "dynamic_sql_table",
+						"type": "DatasetReference",
+						"parameters": {
+							"tblName": "TBL_1"
+						}
+					},
+					"fieldList": [
+						"structure",
+						"exists",
+						"columnCount"
+					]
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-10-23T05:39:55Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,9 @@
+{
+	"name": "DF-ADEOCT24",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "4da360f1-c88d-496b-b3c6-5fcac8f233d4",
+		"tenantId": "360f9e44-4ba7-43ec-840d-1d6a563f8eef"
+	}
+}

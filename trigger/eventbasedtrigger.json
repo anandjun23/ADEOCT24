@@ -1,0 +1,25 @@
+{
+	"name": "eventbasedtrigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "event_pipeline",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/dataset/blobs/eventtrigger_input",
+			"blobPathEndsWith": ".csv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/7995e5b3-8aee-4bda-b2ce-489aa0ffb40f/resourceGroups/RG-ADEOCT24/providers/Microsoft.Storage/storageAccounts/adlsoct24",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

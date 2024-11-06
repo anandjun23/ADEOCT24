@@ -1,0 +1,24 @@
+{
+	"name": "LS_SQL_KV",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "sqlserverade24.database.windows.net",
+			"database": "dbadeoct24",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "sqladmin",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "KV_LS",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sqlpassword"
+			}
+		}
+	}
+}

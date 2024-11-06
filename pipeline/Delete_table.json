@@ -1,0 +1,44 @@
+{
+	"name": "Delete_table",
+	"properties": {
+		"activities": [
+			{
+				"name": "Stored procedure1",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[DYNAMIC_DEL_TABLE]",
+					"storedProcedureParameters": {
+						"tablename": {
+							"value": {
+								"value": "@pipeline().parameters.tblName",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_SQL",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"tblName": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-10-23T05:39:55Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

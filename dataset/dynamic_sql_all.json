@@ -1,0 +1,55 @@
+{
+	"name": "dynamic_sql_all",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQL_PARAM",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"sqlServerName": {
+					"value": "@dataset().servername",
+					"type": "Expression"
+				},
+				"dBName": {
+					"value": "@dataset().dbname",
+					"type": "Expression"
+				},
+				"loginid": {
+					"value": "@dataset().loginid",
+					"type": "Expression"
+				},
+				"password": {
+					"value": "@dataset().password",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"servername": {
+				"type": "string"
+			},
+			"dbname": {
+				"type": "string"
+			},
+			"loginid": {
+				"type": "string"
+			},
+			"password": {
+				"type": "string"
+			},
+			"tablename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "DBO",
+			"table": {
+				"value": "@dataset().tablename",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

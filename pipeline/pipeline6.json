@@ -1,0 +1,201 @@
+{
+	"name": "pipeline6",
+	"properties": {
+		"activities": [
+			{
+				"name": "Until1",
+				"type": "Until",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@or(\r\n    equals(variables('Actual_Iter_Count'), 3),\r\n    activity('Get Metadata1').output.exists)",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Wait1",
+							"type": "Wait",
+							"dependsOn": [
+								{
+									"activity": "Copy data1",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 10
+							}
+						},
+						{
+							"name": "Get Metadata1",
+							"type": "GetMetadata",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "Dynamic_Blob_File",
+									"type": "DatasetReference",
+									"parameters": {
+										"ContainerName": "dataset",
+										"FolderName": "Input",
+										"FileName": {
+											"value": "@pipeline().parameters.FileName",
+											"type": "Expression"
+										}
+									}
+								},
+								"fieldList": [
+									"exists"
+								],
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "BinaryReadSettings"
+								}
+							}
+						},
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Get Metadata1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "BinarySource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true
+									},
+									"formatSettings": {
+										"type": "BinaryReadSettings"
+									}
+								},
+								"sink": {
+									"type": "BinarySink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "Dynamic_Blob_File",
+									"type": "DatasetReference",
+									"parameters": {
+										"ContainerName": "dataset",
+										"FolderName": "Input",
+										"FileName": {
+											"value": "@pipeline().parameters.FileName",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "Dynamic_Blob_Folder",
+									"type": "DatasetReference",
+									"parameters": {
+										"ContainerName": "dataset",
+										"FolderName": "Output"
+									}
+								}
+							]
+						},
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Temp_Iter_count",
+								"value": {
+									"value": "@add(variables('Actual_Iter_Count'),1)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set variable2",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set variable1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Actual_Iter_Count",
+								"value": {
+									"value": "@variables('Temp_Iter_count')",
+									"type": "Expression"
+								}
+							}
+						}
+					],
+					"timeout": "0.12:00:00"
+				}
+			}
+		],
+		"parameters": {
+			"FileName": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"Temp_Iter_count": {
+				"type": "Integer",
+				"defaultValue": 0
+			},
+			"Actual_Iter_Count": {
+				"type": "Integer",
+				"defaultValue": 0
+			},
+			"File_list": {
+				"type": "Array"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-11-01T04:09:23Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

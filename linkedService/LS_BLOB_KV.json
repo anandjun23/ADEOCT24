@@ -1,0 +1,19 @@
+{
+	"name": "LS_BLOB_KV",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"connectionString": "DefaultEndpointsProtocol=https;AccountName=adlsoct24;",
+			"accountKey": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "KV_LS",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "adlskey"
+			}
+		}
+	}
+}

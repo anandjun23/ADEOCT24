@@ -1,0 +1,142 @@
+{
+	"name": "FILE_MISSING_ALERT_TEST",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "Dynamic_Blob_File",
+						"type": "DatasetReference",
+						"parameters": {
+							"ContainerName": "dataset",
+							"FolderName": "Input",
+							"FileName": "emp_sal.csv"
+						}
+					},
+					"fieldList": [
+						"exists"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "BinaryReadSettings"
+					}
+				}
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@activity('Get Metadata1').output.exists",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Web1",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"method": "POST",
+								"url": "https://prod-21.centralindia.logic.azure.com:443/workflows/ca9ba7bfa8fb4008b71cd1d92ba9d149/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=LZpUr1Eo6OvUA_4zGP6VJDhimbjvXE9hC80zg1wTvWU",
+								"body": {
+									"value": "{\n    \"PipelineName\": \"@{pipeline().Pipeline}\",\n    \"DataFactoryName\": \"@{pipeline().DataFactory}\",\n    \"ErrorMessage\": \"File is Missing\"\n}",
+									"type": "Expression"
+								}
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "BinarySource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true
+									},
+									"formatSettings": {
+										"type": "BinaryReadSettings"
+									}
+								},
+								"sink": {
+									"type": "BinarySink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "Dynamic_Blob_File",
+									"type": "DatasetReference",
+									"parameters": {
+										"ContainerName": "dataset",
+										"FolderName": "Input",
+										"FileName": "emp_sal.csv"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "Dynamic_Blob_Folder",
+									"type": "DatasetReference",
+									"parameters": {
+										"ContainerName": "dataset",
+										"FolderName": "Output"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-11-06T04:06:10Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

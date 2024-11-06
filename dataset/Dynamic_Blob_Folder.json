@@ -1,0 +1,33 @@
+{
+	"name": "Dynamic_Blob_Folder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_blob",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"ContainerName": {
+				"type": "string"
+			},
+			"FolderName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": {
+					"value": "@dataset().FolderName",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().ContainerName",
+					"type": "Expression"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

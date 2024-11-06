@@ -1,0 +1,38 @@
+{
+	"name": "test_kv_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQL_KV",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "NAME",
+				"type": "varchar"
+			},
+			{
+				"name": "ADDRESS",
+				"type": "varchar"
+			},
+			{
+				"name": "MAILCODE",
+				"type": "varchar"
+			},
+			{
+				"name": "CITY",
+				"type": "varchar"
+			},
+			{
+				"name": "COUNTRY",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ADDRESS_COMMON"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,132 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "dynamic_sql_all",
+						"type": "DatasetReference",
+						"parameters": {
+							"servername": {
+								"value": "@pipeline().parameters.IP_servername",
+								"type": "Expression"
+							},
+							"dbname": {
+								"value": "@pipeline().parameters.IP_dbname",
+								"type": "Expression"
+							},
+							"loginid": {
+								"value": "@pipeline().parameters.IP_login",
+								"type": "Expression"
+							},
+							"password": {
+								"value": "@pipeline().parameters.IP_password",
+								"type": "Expression"
+							},
+							"tablename": {
+								"value": "@pipeline().parameters.IP_tblname",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "dynamic_sql_all",
+						"type": "DatasetReference",
+						"parameters": {
+							"servername": {
+								"value": "@pipeline().parameters.OP_servername",
+								"type": "Expression"
+							},
+							"dbname": {
+								"value": "@pipeline().parameters.OP_dbname",
+								"type": "Expression"
+							},
+							"loginid": {
+								"value": "@pipeline().parameters.OP_login",
+								"type": "Expression"
+							},
+							"password": {
+								"value": "@pipeline().parameters.OP_password",
+								"type": "Expression"
+							},
+							"tablename": {
+								"value": "@pipeline().parameters.OP_tblname",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"IP_servername": {
+				"type": "string"
+			},
+			"IP_dbname": {
+				"type": "string"
+			},
+			"IP_login": {
+				"type": "string"
+			},
+			"IP_password": {
+				"type": "string"
+			},
+			"OP_servername": {
+				"type": "string"
+			},
+			"OP_dbname": {
+				"type": "string"
+			},
+			"OP_login": {
+				"type": "string"
+			},
+			"OP_password": {
+				"type": "string"
+			},
+			"IP_tblname": {
+				"type": "String"
+			},
+			"OP_tblname": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-10-18T05:13:13Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

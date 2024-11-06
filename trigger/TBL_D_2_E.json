@@ -1,0 +1,28 @@
+{
+	"name": "TBL_D_2_E",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "copy_Dynamic_Table",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"InputTableName": "TBL_D",
+					"OutputTableName": "TBL_E"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 15,
+				"startTime": "2024-10-18T05:15:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
